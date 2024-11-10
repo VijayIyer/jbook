@@ -1,6 +1,7 @@
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import { error } from 'console';
 
 let service: esbuild.Service;
 
@@ -11,8 +12,8 @@ const bundle = async (rawCode: string) => {
             wasmURL: 'https://unpkg.com/esbuild-wasm@0.8.27/esbuild.wasm',
           });
     }
-
-    const result = await service.build({
+    try {
+      const result = await service.build({
         entryPoints: ['index.js'],
         bundle: true,
         write: false,
@@ -22,8 +23,33 @@ const bundle = async (rawCode: string) => {
           global: 'window',
         },
       });
-
-    return result.outputFiles[0].text;
+      return {
+        code:result.outputFiles[0].text,
+        err: ""
+      };
+    } catch (err) {
+      if (err instanceof Error) {
+        return {
+          code: "",
+          err: err.message,
+        };
+      } else {
+        throw err;
+      }
+    }
 }
 
 export default bundle;
+
+/*
+} catch (err) {
+    if (err instanceof Error) {
+      return {
+        code: "",
+        err: err.message,
+      };
+    } else {
+      throw err;
+    }
+  }
+*/

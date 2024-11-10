@@ -8,7 +8,7 @@ const TextEditor: React.FC = () => {
     useEffect(() => {
         const listener = (event: MouseEvent) => {
             if(ref.current && event.target && ref.current.contains(event.target as Node)) {
-                console.log('element clicked on is inside editpr')
+                console.log('element clicked on is inside editor')
             }
             setEditing(false);
         };
@@ -19,7 +19,7 @@ const TextEditor: React.FC = () => {
     }, []);
 
     if(editing) {
-        return <div>
+        return <div ref={ref}>
             <MDEditor />
         </div>
     }

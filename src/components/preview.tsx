@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
 import './preview.css';
+import { useRef, useEffect } from 'react';
 
 interface PreviewProps {
   code: string;
@@ -15,7 +15,6 @@ const html = `
         <script>
           window.addEventListener('message', (event) => {
             try {
-                console.log(event.data)
               eval(event.data);
             } catch (err) {
               const root = document.querySelector('#root');
@@ -37,7 +36,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
   }, [code]);
 
   return (
-    <div className='preview-wrapper'>
+    <div className="preview-wrapper">
       <iframe
         title="preview"
         ref={iframe}
@@ -45,7 +44,6 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         srcDoc={html}
       />
     </div>
-    
   );
 };
 
